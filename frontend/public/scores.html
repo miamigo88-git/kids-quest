@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#7C3AED" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+  <title>Scores · Kids Quest</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <section class="screen active">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" id="back-btn" aria-label="Back">←</button>
+          <div class="topbar-title">
+            <span class="kid-avatar">🏆</span>
+            <div>
+              <h2>Score Quest</h2>
+              <small id="sub-period">This week</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="scores-section">
+        <div id="kid-pills" class="kid-picker-pills"></div>
+
+        <div class="period-tabs">
+          <button class="period-tab active" data-period="week">This Week</button>
+          <button class="period-tab" data-period="month">This Month</button>
+          <button class="period-tab" data-period="year">Year</button>
+        </div>
+
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="sc-emoji">⭐</div>
+            <div class="sc-value" id="sum-points">0</div>
+            <div class="sc-label">Total Points</div>
+          </div>
+          <div class="summary-card">
+            <div class="sc-emoji">✅</div>
+            <div class="sc-value"><span id="sum-completed">0</span>/<span id="sum-total">0</span></div>
+            <div class="sc-label">Tasks Done</div>
+          </div>
+          <div class="summary-card">
+            <div class="sc-emoji">📈</div>
+            <div class="sc-value"><span id="sum-rate">0</span>%</div>
+            <div class="sc-label">Completion</div>
+          </div>
+          <div class="summary-card">
+            <div class="sc-emoji">🔥</div>
+            <div class="sc-value" id="sum-streak">0</div>
+            <div class="sc-label">Perfect Day Streak</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Daily Points</h3>
+          <div class="bar-chart" id="bar-chart"></div>
+        </div>
+
+        <div class="chart-card" id="best-day-card">
+          <h3>🥇 Best Day</h3>
+          <div id="best-day-content" style="color:var(--text-muted);">—</div>
+        </div>
+
+        <div class="chart-card">
+          <h3>🏆 Family Leaderboard</h3>
+          <div class="leaderboard-list" id="leaderboard"></div>
+        </div>
+      </div>
+    </section>
+    <div id="toast" class="toast hidden"></div>
+  </div>
+  <script src="/js/scores.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

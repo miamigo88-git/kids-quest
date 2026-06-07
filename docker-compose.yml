@@ -1,0 +1,30 @@
+# For TrueNAS SCALE (Electric Eel / Fangtooth) - Custom App
+# Or for any Docker host
+
+services:
+  kids-quest:
+    build: .
+    image: kids-quest:latest
+    container_name: kids-quest
+    restart: unless-stopped
+    ports:
+      # Map host port 3000 to container port 3000
+      # In TrueNAS, you can change the host port if 3000 is taken
+      - "3000:3000"
+    volumes:
+      # Persistent storage for the SQLite database
+      # In TrueNAS, point this at a dataset on your pool, e.g. /mnt/tank/apps/kids-quest
+      - ./data:/data
+    environment:
+      # Initial PIN for the parent account (change after first login!)
+      DEFAULT_PARENT_PIN: "1234"
+      # Optional: change the port the app listens on inside the container
+      PORT: "3000"
+      # Optional: timezone for daily reset & date display (example: Asia/Kuala_Lumpur)
+      TZ: "UTC"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

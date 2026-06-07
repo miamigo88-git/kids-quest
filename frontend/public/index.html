@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#7C3AED" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Kids Quest" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+  <title>Kids Quest</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Login / profile picker -->
+    <section id="screen-login" class="screen active">
+      <div class="login-wrap">
+        <div class="login-header">
+          <div class="logo-cat">🐱</div>
+          <h1>Kids Quest</h1>
+          <p class="subtitle">Who's playing today?</p>
+        </div>
+        <div id="profile-grid" class="profile-grid"></div>
+        <div id="pin-pad" class="pin-pad hidden">
+          <div class="pin-header">
+            <button class="back-btn" id="pin-back" aria-label="Back">‹</button>
+            <div class="pin-target">
+              <span id="pin-target-avatar"></span>
+              <span id="pin-target-name"></span>
+            </div>
+          </div>
+          <div class="pin-display" id="pin-display">
+            <span class="pin-dot"></span><span class="pin-dot"></span>
+            <span class="pin-dot"></span><span class="pin-dot"></span>
+          </div>
+          <div class="pin-error" id="pin-error"></div>
+          <div class="pin-keys">
+            <button class="pin-key" data-key="1">1</button>
+            <button class="pin-key" data-key="2">2</button>
+            <button class="pin-key" data-key="3">3</button>
+            <button class="pin-key" data-key="4">4</button>
+            <button class="pin-key" data-key="5">5</button>
+            <button class="pin-key" data-key="6">6</button>
+            <button class="pin-key" data-key="7">7</button>
+            <button class="pin-key" data-key="8">8</button>
+            <button class="pin-key" data-key="9">9</button>
+            <button class="pin-key pin-key-fn" id="pin-clear">⌫</button>
+            <button class="pin-key" data-key="0">0</button>
+            <button class="pin-key pin-key-fn" id="pin-ok">OK</button>
+          </div>
+        </div>
+        <div class="login-footer">
+          <button class="link-btn" id="show-parent-login">Parent login</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kid dashboard -->
+    <section id="screen-kid" class="screen">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" id="kid-logout" aria-label="Switch profile">←</button>
+          <div class="topbar-title">
+            <span id="kid-avatar" class="kid-avatar"></span>
+            <div>
+              <h2 id="kid-name">Hello</h2>
+              <small id="today-date"></small>
+            </div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-btn" id="kid-scores" aria-label="View scores">🏆</button>
+        </div>
+      </header>
+
+      <div class="cat-section">
+        <div id="cat-container" class="cat-container"></div>
+        <div class="cat-bubble" id="cat-bubble">Let's get started!</div>
+      </div>
+
+      <div class="progress-card">
+        <div class="progress-info">
+          <div class="progress-stat">
+            <div class="stat-value" id="stat-points">0</div>
+            <div class="stat-label">Points</div>
+          </div>
+          <div class="progress-stat">
+            <div class="stat-value"><span id="stat-done">0</span>/<span id="stat-total">0</span></div>
+            <div class="stat-label">Tasks</div>
+          </div>
+          <div class="progress-stat">
+            <div class="stat-value"><span id="stat-percent">0</span>%</div>
+            <div class="stat-label">Done</div>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="tasks-section">
+        <h3 class="section-title">My Quests</h3>
+        <div id="tasks-list" class="tasks-list"></div>
+      </div>
+    </section>
+
+    <!-- Parent dashboard -->
+    <section id="screen-parent" class="screen">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" id="parent-logout" aria-label="Logout">←</button>
+          <div class="topbar-title">
+            <span class="kid-avatar">👨‍👩‍👧</span>
+            <div>
+              <h2>Parent Panel</h2>
+              <small>Manage kids & tasks</small>
+            </div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-btn" id="parent-scores" aria-label="Scores">🏆</button>
+          <button class="icon-btn" id="parent-settings" aria-label="Settings">⚙️</button>
+        </div>
+      </header>
+
+      <div class="parent-tabs">
+        <button class="tab-btn active" data-tab="kids">Kids</button>
+        <button class="tab-btn" data-tab="tasks">Tasks</button>
+      </div>
+
+      <div class="tab-pane active" id="tab-kids">
+        <button class="primary-btn full" id="add-kid-btn">+ Add Kid</button>
+        <div id="parent-kids-list" class="parent-list"></div>
+      </div>
+
+      <div class="tab-pane" id="tab-tasks">
+        <div class="kid-selector">
+          <label>Showing tasks for:</label>
+          <select id="task-kid-select"></select>
+        </div>
+        <button class="primary-btn full" id="add-task-btn">+ Add Task</button>
+        <button class="secondary-btn full" id="seed-defaults-btn">+ Add 10 Starter Tasks</button>
+        <div id="parent-tasks-list" class="parent-list"></div>
+      </div>
+    </section>
+
+    <!-- Modal container -->
+    <div id="modal-root" class="modal-root hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Confetti container -->
+    <div id="confetti" class="confetti-container"></div>
+  </div>
+
+  <script src="/js/cat.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
